@@ -11,7 +11,6 @@ import Paper from '@mui/material/Paper';
 const SaleDataTable = ({ salesData }) => {
     const [sales, setSales] = useState([]);
 
-
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
             backgroundColor: "#ccc",
@@ -42,6 +41,8 @@ const SaleDataTable = ({ salesData }) => {
         }, []);
 
     useEffect(() => {
+       
+
         let newArr = [];
         for (let key in salesData) {
             newArr.push({
@@ -51,8 +52,6 @@ const SaleDataTable = ({ salesData }) => {
         }
         setSales(sortData(newArr));
     }, []);
-
-
 
 
     return (
@@ -73,6 +72,8 @@ const SaleDataTable = ({ salesData }) => {
                     ))}
                 </TableBody>
             </Table> : <p> nothing to show</p>}
+
+
         </TableContainer>
     )
 }

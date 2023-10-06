@@ -38,12 +38,12 @@ const SaleChart = ({ salesData }) => {
     };
 
     const data = {
-        labels: salesData.map(o => o.month),
+        labels: salesData.map(data => data.month),
         datasets: [
 
             {
                 label: ' month ',
-                data: salesData.map(o => o.sales),
+                data: salesData.map(data => data.sales),
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
             },
         ],
