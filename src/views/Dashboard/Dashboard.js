@@ -1,7 +1,8 @@
-import * as React from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+import { utils as XLSXUtils, writeFile } from "xlsx";
 import domtoimage from "dom-to-image";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -17,7 +18,8 @@ import SaleChart from "./../../components/SaleChart/SaleChart";
 const drawerWidth = 240;
 function ResponsiveDrawer(props) {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   const salesData = [
     { month: "January", sales: 500 },
     { month: "September", sales: 510 },
@@ -63,6 +65,17 @@ function ResponsiveDrawer(props) {
       });
   };
 
+  const downloadExcelHandle = () => {
+    if (!salesData || salesData.length === 0) {
+      console.error("Sales data is empty");
+      return;
+    }
+    const worksheet = XLSXUtils.json_to_sheet(salesData);
+    const workbook = XLSXUtils.book_new();
+    XLSXUtils.book_append_sheet(workbook, worksheet, "Sales Data");
+    writeFile(workbook, "SaleReport.xlsx");
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -78,10 +91,10 @@ function ResponsiveDrawer(props) {
           <Button variant="outlined" onClick={downloadPDFHandle}>
             Download PDF
           </Button>
-          <Button variant="outlined" onClick={downloadPDFHandle} className="btn-box">
+          <Button variant="outlined" className="btn-box">
             Download Word
           </Button>
-          <Button variant="outlined" onClick={downloadPDFHandle} className="btn-box">
+          <Button variant="outlined" onClick={downloadExcelHandle} className="btn-box">
             Download Excel
           </Button>
         </Grid>
