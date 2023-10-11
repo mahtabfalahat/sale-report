@@ -1,11 +1,11 @@
-import { memo } from "react";
+import { memo, useRef } from "react";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import "./style.css";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const SaleChart = ({ salesData }) => {
+const SaleChart = ({ salesData, chartRef }) => {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -32,7 +32,7 @@ const SaleChart = ({ salesData }) => {
   };
 
   return (
-    <div className="chart-bar-box" id="chart-bar-box">
+    <div className="chart-bar-box" id="chart-bar-box" ref={chartRef}>
       <Bar data={data} options={options} />
     </div>
   );
